@@ -35,6 +35,11 @@ export function SocialIcons() {
             // Remover classes de animação após completar
             setTimeout(() => {
               trail?.classList.remove("trail-effect")
+
+              // Adicionar a classe de animação float após a animação inicial
+              if (!icon.classList.contains("instagram-icon")) {
+                wrapper?.classList.add("float-animation")
+              }
             }, 1000)
           }, 1000)
         }, index * 300)

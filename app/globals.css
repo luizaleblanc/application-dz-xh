@@ -40,7 +40,9 @@ body {
   height: 70px;
   position: relative;
   transform-style: preserve-3d;
-  transition: transform 0.5s ease-out;
+  transition: all 0.5s ease-out;
+  /* Animação de flutuação suave no estado normal */
+  animation: float 3s ease-in-out infinite;
 }
 
 /* Camadas para criar o efeito 3D */
@@ -56,26 +58,30 @@ body {
   border: 2px solid;
   border-radius: 5px;
   background-color: black;
+  transition: all 0.3s ease-out;
 }
 
-/* Posicionamento das camadas para criar o efeito 3D */
+/* Posicionamento padrão das camadas - todas alinhadas no estado normal */
+.icon-layer:nth-child(1),
+.icon-layer:nth-child(2),
+.icon-layer:nth-child(3),
+.main-layer {
+  transform: translate(0, 0);
+}
+
 .icon-layer:nth-child(1) {
-  transform: translateZ(-6px);
   opacity: 0.2;
 }
 
 .icon-layer:nth-child(2) {
-  transform: translateZ(-4px);
   opacity: 0.4;
 }
 
 .icon-layer:nth-child(3) {
-  transform: translateZ(-2px);
   opacity: 0.6;
 }
 
 .main-layer {
-  transform: translateZ(0);
   opacity: 1;
 }
 
@@ -125,6 +131,7 @@ body {
 /* Mostrar o nome apenas no hover */
 .social-icon:hover .icon-label {
   opacity: 1;
+  animation: fadeInUp 0.5s ease forwards;
 }
 
 /* Facebook */
@@ -157,11 +164,6 @@ body {
   color: #e1306c;
 }
 
-/* Remover a visibilidade permanente do label do Instagram */
-.instagram-icon .icon-label {
-  opacity: 0;
-}
-
 /* LinkedIn */
 .linkedin-icon .icon-layer {
   border-color: #0a66c2;
@@ -182,9 +184,61 @@ body {
   color: #ff0000;
 }
 
-/* Efeito de hover para todos os ícones - estilo Instagram */
+/* EFEITO DE HOVER 3D COM CAMADAS ISOMÉTRICAS */
+.social-icon .icon-wrapper {
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease-out;
+  /* Estado normal: ícone reto */
+  transform: rotate(0deg);
+}
+
+/* Efeito de hover para cada camada - estilo isométrico */
 .social-icon:hover .icon-wrapper {
-  transform: translateZ(20px);
+  transform: rotate(-45deg) rotateX(30deg);
+  animation: hoverTransform 0.5s ease forwards;
+}
+
+.social-icon:hover .icon-layer:nth-child(1) {
+  transform: translate(12px, 12px);
+  opacity: 0.2;
+  animation: layerSlide1 0.5s ease forwards;
+}
+
+.social-icon:hover .icon-layer:nth-child(2) {
+  transform: translate(8px, 8px);
+  opacity: 0.4;
+  animation: layerSlide2 0.5s ease forwards;
+}
+
+.social-icon:hover .icon-layer:nth-child(3) {
+  transform: translate(4px, 4px);
+  opacity: 0.6;
+  animation: layerSlide3 0.5s ease forwards;
+}
+
+.social-icon:hover .main-layer {
+  transform: translate(0, 0);
+}
+
+/* Efeitos específicos para cada rede social no hover */
+.facebook-icon:hover .icon-layer {
+  box-shadow: 0 0 15px rgba(24, 119, 242, 0.5);
+}
+
+.twitter-icon:hover .icon-layer {
+  box-shadow: 0 0 15px rgba(29, 161, 242, 0.5);
+}
+
+.instagram-icon:hover .icon-layer {
+  box-shadow: 0 0 15px rgba(225, 48, 108, 0.5);
+}
+
+.linkedin-icon:hover .icon-layer {
+  box-shadow: 0 0 15px rgba(10, 102, 194, 0.5);
+}
+
+.youtube-icon:hover .icon-layer {
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
 }
 
 /* Light Trail Effect */
@@ -208,6 +262,75 @@ body {
 
 .trail-effect {
   animation: trail 1s ease-out;
+}
+
+/* Animação de flutuação suave para o estado normal */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Animação para o hover - transformação do wrapper */
+@keyframes hoverTransform {
+  0% {
+    transform: translateY(0) rotate(0deg) rotateX(0deg);
+  }
+  100% {
+    transform: translateY(-5px) rotate(-45deg) rotateX(30deg);
+  }
+}
+
+/* Animações para as camadas no hover */
+@keyframes layerSlide1 {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translate(12px, 12px);
+    opacity: 0.2;
+  }
+}
+
+@keyframes layerSlide2 {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate(8px, 8px);
+    opacity: 0.4;
+  }
+}
+
+@keyframes layerSlide3 {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(4px, 4px);
+    opacity: 0.6;
+  }
+}
+
+/* Animação para o texto */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes rotate {
@@ -257,7 +380,32 @@ body {
   border-radius: 50%;
 }
 
-/* Efeito específico para o Instagram */
+/* Remover estilos específicos do Instagram para padronizar com os outros ícones */
 .instagram-icon .icon-wrapper {
-  transform: translateZ(10px);
+  transform: rotate(0deg);
+  animation: float 3s ease-in-out infinite;
+}
+
+.instagram-icon .icon-layer:nth-child(1),
+.instagram-icon .icon-layer:nth-child(2),
+.instagram-icon .icon-layer:nth-child(3) {
+  transform: translate(0, 0);
+}
+
+.instagram-icon .icon-layer {
+  box-shadow: none;
+}
+
+/* Mostrar o label do Instagram no hover */
+.instagram-icon .icon-label {
+  opacity: 0;
+}
+
+.instagram-icon:hover .icon-label {
+  opacity: 1;
+}
+
+/* Remover animação de pulso do Instagram */
+.instagram-icon .main-layer {
+  animation: none;
 }
